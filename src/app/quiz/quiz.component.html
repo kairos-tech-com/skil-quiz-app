@@ -1,0 +1,23 @@
+<div class="container">
+
+    <h3>AWS Stands for...  </h3>
+
+    {{question}}
+
+<table>
+    <tr *ngFor="let option of options; let i = option"  (click)="refreshing(option)"
+     [ngClass]="{actIdea: isActive(option.correct) && option.correct }">
+        <!-- create a radio button-->
+        <td ><input
+        type="radio"
+        name="radioGroup"
+        value="{{option.value}}" >
+    </td>
+    <td class="optionValue"><i>{{option.value}}</i></td>
+</table>
+    <a  >{{selected.value}} </a><br>
+    
+    <button type="button" (click) = "complete()" class="btn btn-success"><a routerLink="/complete">Submit</a></button>  &nbsp;
+    
+</div>
+
