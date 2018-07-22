@@ -4,9 +4,11 @@
 
     {{question}}
 
+
+    <div *ngIf ="false"> Hey </div>
+
 <table>
-    <tr *ngFor="let option of options; let i = option"  (click)="refreshing(option)"
-     [ngClass]="{actIdea: isActive(option.correct) && option.correct }">
+    <tr *ngFor="let option of options; let i = option"  (click)="refresh(option)" >
         <!-- create a radio button-->
         <td ><input
         type="radio"
@@ -15,9 +17,10 @@
     </td>
     <td class="optionValue"><i>{{option.value}}</i></td>
 </table>
-    <a  >{{selected.value}} </a><br>
+    <a  >{{selected.value}}</a><br>
     
-    <button type="button" (click) = "complete()" class="btn btn-success"><a routerLink="/complete">Submit</a></button>  &nbsp;
+    <button *ngIf ="!completion" type="button" (click) = "nextQuestion()" class="btn btn-success">Next</button>
+    <button *ngIf ="completion" type="button" (click) = "complete()" class="btn btn-success"><a routerLink="/complete">Submit</a></button>  
     
 </div>
 

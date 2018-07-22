@@ -1,19 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
-import {Routes, RouterModule, RouterOutlet} from "@angular/router";
-
+import { Routes, RouterModule, RouterOutlet } from '@angular/router';
+// import {InterceptorModule} from './interceptor.module';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { CompleteComponent } from './complete/complete.component';
 
 
 
-const routes: Routes=[
-  {path:'quiz',component:QuizComponent},
-  {path:'complete',component:CompleteComponent}, 
-  
-  
-
+const routes: Routes = [
+  { path: 'quiz', component: QuizComponent },
+  { path: 'complete', component: CompleteComponent }
 ];
 
 
@@ -21,13 +19,13 @@ const routes: Routes=[
   declarations: [
     AppComponent,
     QuizComponent,
-    CompleteComponent,
-  
-    
+    CompleteComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
+    // InterceptorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

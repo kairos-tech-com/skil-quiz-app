@@ -7,52 +7,66 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
-  
-  question: string = "";
+  // reset_value: any = null;
+  question: string = '123';
   selected: string = "a";
-  selectedRadio: number = 0;
-  bool: boolean = false
+  question_id: number = 1;
+  // selectedRadio: number = 0;
+  // bool: boolean = false
   options;
-  x: string = "";
+  // x: string = "";
 
-
-  constructor() {
-    this.options = [
-      {value: "a", correct: false},
-      {value: "b", correct: false},
-      {value: "c", correct: false},
-      {value: "d", correct: true},
-  ]
-   }
-
-  // private httpClient:HttpClient
-
-  refreshing(option) {
-    this.selected = option;
-    console.log(this.selected);
-    this.bool = true;
+  constructor(private httpClient: HttpClient) {
+    this.httpClient.get('http://18.233.224.125:9090/questions/1')
+      .subscribe((data) => {
+        console.log(data.options[0].A);
+        this.question = data.question;
+        this.options = [
+          { value: data.options[0].A, opt: 'A' },
+          { value: data.options[1].B, opt: 'B' },
+          { value: data.options[2].C, opt: 'C' },
+          { value: data.options[3].D, opt: 'D' }
+        ];
+      });
   }
 
-  isActive(item) {
-    return this.bool === item;
-  }  
 
-  nextQuestion() { 
-    
-    //this.radioGroup.reset();
-    this.question = 'question 2';
-    
+  refresh(option) {
+    this.selected = option;
+    console.log(this.selected);
+  }
 
-    this.options = [
-      {value: "a1", correct: false},
-      {value: "a2", correct: false},
-      {value: "a3", correct: false},
-      {value: "a4", correct: true},
-  ]
-    // set http again
-    // equal with question, options
-   }
-   
+
+  nextQuestion() {
+    question_id++;
+    this.selected = null;
+
+    this.httpClient.post('http://18.233.224.125:9090/user/responses',
+      {
+        'questionId': 1,
+        'userId': 12,
+        'testId': 111,
+        'selectedAnswer': B
+      }
+    )
+      .subscribe((data) => {
+        console.log(data);
+      });
+
+    this.httpClient.get('http://18.233.224.125:9090/questions/' + question_id)
+      .subscribe((data) => {
+        console.log(data.options[0].A);
+        this.question = data.question;
+        this.options = [
+          { value: data.options[0].A, opt: 'A' },
+          { value: data.options[1].B, opt: 'B' },
+          { value: data.options[2].C, opt: 'C' },
+          { value: data.options[3].D, opt: 'D' }
+        ];
+      });
+  }
+
+
   ngOnInit() {
   }
 
