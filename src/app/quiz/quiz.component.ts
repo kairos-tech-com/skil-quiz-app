@@ -8,9 +8,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuizComponent implements OnInit {
   // reset_value: any = null;
-  question: string = '123';
-  selected: string = "a";
-  question_id: number = 1;
+  question = '123';
+  selected: any = '';
+  question_id = 1;
+  completion = false;
   // selectedRadio: number = 0;
   // bool: boolean = false
   options;
@@ -34,13 +35,15 @@ export class QuizComponent implements OnInit {
 
   refresh(option) {
     this.selected = option;
-    console.log(this.selected);
+    console.log(this.selected.opt);
   }
 
 
   nextQuestion() {
     this.question_id++;
-
+    if (this.question_id >= 5) {
+      this.completion = true;
+    }
     this.httpClient.post('http://18.233.224.125:9090/user/responses',
       {
         'questionId': 1,
@@ -50,7 +53,7 @@ export class QuizComponent implements OnInit {
       }
     )
       .subscribe((data) => {
-        console.log(data);
+        console.log(data + 'Wow');
         this.selected = null;
       });
 
